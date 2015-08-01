@@ -12,7 +12,7 @@ CACHE:
 /scripts/lib/pouchdb-3.6.0.min.js
 /scripts/main.js
 /scripts/listPageMain.js
-/scripts/ListCreator.js
+/scripts/listCreator.js
 /scripts/EventBus.js
 /scripts/StorageManager.js
 /scripts/List.js
@@ -21,7 +21,7 @@ CACHE:
 /scripts/NetworkIndicator.js
 
 NETWORK:
-/api/lists
+*
 
 FALLBACK:
 /list/ /listPage.html

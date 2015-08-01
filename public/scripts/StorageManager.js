@@ -1,9 +1,18 @@
 define(['EventBus', 'PouchDB', 'List'], function(eventBus, PouchDB, List) {
-  var db;
+  var db,
+      sync;
+      remoteDB = "http://" + window.location.hostname + ":5984/mydb";
 
   eventBus.subscribe("listNameEntered", createList);
   eventBus.subscribe("listDeleted", deleteList);
   eventBus.subscribe("listModified", modifyList);
+
+  function enableDBSync() {
+    sync = db.sync(remoteDB, {
+      live: true,
+      retry: true
+    });
+  }
 
   function createList(name) {
     var list = new List({name: name});
@@ -54,8 +63,14 @@ define(['EventBus', 'PouchDB', 'List'], function(eventBus, PouchDB, List) {
 
   return {
     init: function() {
+
       db = new PouchDB('mydb');
-      window.PouchDB = PouchDB;
+      window.PouchDB  = PouchDB;
+
+      if (navigator.onLine) {
+        enableDBSync();
+      }
+
       loadLists();
     }
   };

@@ -7,7 +7,7 @@ requirejs.config({
   }
 });
 
-require(['jquery', 'ListCreator', 'StorageManager', 'ListContainer', 'NetworkIndicator'], function($, listCreator,
+require(['jquery', 'listCreator', 'StorageManager', 'ListContainer', 'NetworkIndicator'], function($, listCreator,
   storageManager, listContainer, networkIndicator) {
 
   $(document).ready(function() {
