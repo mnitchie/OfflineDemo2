@@ -1,18 +1,21 @@
-define(['jquery'], function($) {
+define([], function() {
 
   function List(data) {
-    var name = data.name || "New List",
-        id = data.id,
-        localId,
-        createDate = data.createDate || new Date(Date.now()),
-        entries = data.entries || [],
-        dirty = data.dirty,
-        deleted = data.deleted;
+    var name,
+        id,
+        rev,
+        createDate,
+        entries;
 
-
-    if (!id) {
-      localId = data.localId ? data.localId : generateRandomId();
+    if (data.constructor === List) {
+      data = data.getPersistable();
     }
+
+    name = data.name || "New List";
+    id = data.id || data._id;
+    rev = data.rev || data._rev;
+    createDate = data.createDate || new Date(Date.now());
+    entries = data.entries || [];
 
     this.getName = function() {
       return name;
@@ -26,7 +29,21 @@ define(['jquery'], function($) {
     };
 
     this.getId = function() {
-      return id || localId;
+      return id;
+    };
+
+    this.setId = function(newId) {
+      if (!id) {
+        id = newId;
+      }
+    };
+
+    this.getRev = function() {
+      return rev;
+    };
+
+    this.setRev = function(newRev) {
+      rev = newRev;
     };
 
     this.getCreateDate = function() {
@@ -38,7 +55,7 @@ define(['jquery'], function($) {
     };
 
     this.setEntries = function(newEntries) {
-      if (!$.isArray(newEntries)) {
+      if (newEntries.constructor !== Array){
         throw new Error("Argument to List.setEntries() must be an array");
       }
       entries = newEntries;
@@ -48,53 +65,15 @@ define(['jquery'], function($) {
       entries.push(entry);
     };
 
-    this.isDirty = function() {
-      return dirty;
-    };
-
-    this.setIsDirty = function(isDirty) {
-      dirty = isDirty;
-    };
-
-    this.isDeleted = function() {
-      return deleted;
-    };
-
-    this.setIsDeleted = function(isDeleted) {
-      deleted = isDeleted;
-    };
-
-    this.getApiUrl = function() {
-      return id ? "lists/" + id : "lists";
-    };
-
-    this.getSaveMethod = function() {
-      return id ? "PUT" : "POST";
-    };
-
     this.getPersistable = function() {
       return {
         name: name,
-        id: id,
-        localId: localId,
+        _id: id,
+        _rev: rev,
         createDate: new Date(createDate.valueOf()),
-        entries: $.extend(true, [], entries),
-        dirty: dirty,
-        deleted: deleted
+        entries: $.extend(true, [], entries)
       };
     };
-  }
-
-  function generateRandomId() {
-    var i,
-        text = "LOCAL-",
-        possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for(i=0; i < 18; i++ ) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-
-    return text;
   }
 
   return List;

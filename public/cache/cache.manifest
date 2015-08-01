@@ -9,6 +9,7 @@ CACHE:
 /images/ajax-loader.gif
 /scripts/lib/jquery-1.11.3.min.js
 /scripts/lib/require2.1.19.min.js
+/scripts/lib/pouchdb-3.6.0.min.js
 /scripts/main.js
 /scripts/listPageMain.js
 /scripts/ListCreator.js
