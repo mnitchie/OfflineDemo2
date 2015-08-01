@@ -2,7 +2,8 @@ requirejs.config({
   baseUrl: '/scripts',
 
   paths: {
-    jquery: 'lib/jquery-1.11.3.min'
+    jquery: 'lib/jquery-1.11.3.min',
+    PouchDB: 'lib/pouchdb-3.6.0.min'
   }
 });
 
@@ -22,7 +23,6 @@ require(['jquery', 'NetworkIndicator', 'StorageManager', 'EventBus'], function($
     $('#listEntryCreator').click(function() {
       var entry = prompt("Enter something");
       list.addEntry(entry);
-      list.setIsDirty(true);
       $('#listEntryContainer').append($('<li>').text(entry));
 
       eventBus.publish("listModified", list);

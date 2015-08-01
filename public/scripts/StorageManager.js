@@ -63,15 +63,33 @@ define(['EventBus', 'PouchDB', 'List'], function(eventBus, PouchDB, List) {
 
   return {
     init: function() {
-
       db = new PouchDB('mydb');
-      window.PouchDB  = PouchDB;
 
       if (navigator.onLine) {
         enableDBSync();
       }
 
       loadLists();
+    },
+
+    loadList: function(listId) {
+      db = new PouchDB('mydb');
+
+      if (navigator.onLine) {
+        enableDBSync();
+      }
+
+      db.get(listId, function(err, response) {
+        var list;
+        if (err) {
+          alert("List not found. Taking you back to safety...");
+          window.location.href = "/";
+          return;
+        }
+
+        list = new List(response);
+        eventBus.publish("listLoaded", list);
+      });
     }
   };
 
