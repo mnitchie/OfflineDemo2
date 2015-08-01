@@ -6,7 +6,7 @@ var express = require('express'),
     ListSchema,
     List;
 
-mongoose.connect('mongodb://localhost/V02');
+mongoose.connect('mongodb://localhost/V03');
 
 ListSchema = new mongoose.Schema({
   name: {type:String, required: true},

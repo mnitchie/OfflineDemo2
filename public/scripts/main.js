@@ -6,12 +6,13 @@ requirejs.config({
   }
 });
 
-require(['jquery', 'ListCreator', 'StorageManager', 'ListContainer'], function($, listCreator,
-  storageManager, listContainer) {
+require(['jquery', 'ListCreator', 'StorageManager', 'ListContainer', 'NetworkIndicator'], function($, listCreator,
+  storageManager, listContainer, networkIndicator) {
 
   $(document).ready(function() {
     listCreator.init();
     listContainer.init();
     storageManager.init();
+    networkIndicator.init();
   });
 });

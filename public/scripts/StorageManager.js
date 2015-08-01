@@ -2,6 +2,17 @@ define(['jquery', 'EventBus', 'List'], function($, eventBus, List) {
   eventBus.subscribe("listNameEntered", createList);
   eventBus.subscribe("listDeleted", deleteList);
   eventBus.subscribe("listModified", modifyList);
+  window.addEventListener('online', goOnline);
+  window.addEventListener('offline', goOffline);
+
+  function goOnline() {
+    syncData();
+  }
+
+  function goOffline() {
+    // no-op. All relevant actions check navigator.onLine before
+    // persisting data.
+  }
 
   function modifyList(list) {
     if (navigator.onLine && !list.getId().startsWith("LOCAL-")) {
@@ -149,6 +160,9 @@ define(['jquery', 'EventBus', 'List'], function($, eventBus, List) {
       error: function(jqXHR, textStatus, errorThrown) {
         alert("Error loading from the server. Loading data locally instead");
         loadAllLocally();
+      },
+      complete: function() {
+        $('.loadingIndicator').remove();
       }
     });
   }
@@ -161,6 +175,7 @@ define(['jquery', 'EventBus', 'List'], function($, eventBus, List) {
             localStorage.removeItem(list.getId());
         };
 
+    $('body').append($('<div>').addClass('loadingIndicator'));
     for (i = localStorage.length - 1; i >= 0; i--) {
       key = localStorage.key(i);
       list = new List(JSON.parse(localStorage.getItem(key)));

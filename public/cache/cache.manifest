@@ -4,6 +4,9 @@ CACHE:
 /favicon.ico
 /style/app.css
 /images/logo.png
+/images/greenLight.png
+/images/redLight.png
+/images/ajax-loader.gif
 /scripts/lib/jquery-1.11.3.min.js
 /scripts/lib/require2.1.19.min.js
 /scripts/main.js
@@ -13,6 +16,7 @@ CACHE:
 /scripts/List.js
 /scripts/ListContainer.js
 /scripts/utils.js
+/scripts/NetworkIndicator.js
 
 NETWORK:
 /api/lists
