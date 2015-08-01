@@ -1,0 +1,15 @@
+CACHE MANIFEST
+
+CACHE:
+/favicon.ico
+/style/app.css
+/images/logo.png
+/scripts/lib/jquery-1.11.3.min.js
+/scripts/lib/require2.1.19.min.js
+/scripts/main.js
+/scripts/ListCreator.js
+/scripts/EventBus.js
+/scripts/StorageManager.js
+/scripts/List.js
+/scripts/ListContainer.js
+/scripts/utils.js

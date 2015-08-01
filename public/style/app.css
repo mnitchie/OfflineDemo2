@@ -1,0 +1,98 @@
+body {
+  margin: 0;
+}
+
+header {
+  background: #026aa7;
+  height: 30px;
+  padding: 5px;
+}
+
+header #logo {
+  background-image: url("/images/logo.png");
+  background-size: 80px 30px;
+  background-repeat: no-repeat;
+  height:30px;
+  width: 80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+main {
+  margin: 8px;
+}
+
+.clickableWidget {
+  margin: 1em;
+
+  width: 10em;
+  text-align: center;
+
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: .5em;
+  padding-bottom: .5em;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 4px;
+}
+
+.clickableWidget:hover {
+  cursor: pointer;
+}
+
+#listCreator {
+  background-color: #d6dadc;
+  color: #8c8c8c;
+}
+
+#listCreator:hover {
+  background-color: #cdd2d4;
+}
+
+#listNameInput {
+  margin-left: 18px;
+  margin-top: 11px;
+  margin-bottom: 18px;
+  width: 186px;
+  height: 23px;
+  font-size: 16px;
+}
+
+.listItem {
+  float: left;
+  background-color: #0079BF;
+  color: white;
+  position: relative;
+}
+
+.listItem:hover {
+  background-color: #026aa7;
+  color: white;
+}
+
+.listItem button {
+  background-color: Transparent;
+  color: #B8B8B8;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  outline:none;
+  box-shadow:none;
+}
+
+.listItem button:hover {
+  font-weight: bold;
+  color: white;
+}
+
+.listItem .deleteButton {
+  right: 0;
+}
+
+.listItem .editButton {
+  right: 19px;
+}
