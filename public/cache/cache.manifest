@@ -10,6 +10,7 @@ CACHE:
 /scripts/lib/jquery-1.11.3.min.js
 /scripts/lib/require2.1.19.min.js
 /scripts/main.js
+/scripts/listPageMain.js
 /scripts/ListCreator.js
 /scripts/EventBus.js
 /scripts/StorageManager.js
@@ -20,3 +21,6 @@ CACHE:
 
 NETWORK:
 /api/lists
+
+FALLBACK:
+/list/ /listPage.html

@@ -2,17 +2,6 @@ define(['jquery', 'EventBus', 'List'], function($, eventBus, List) {
   eventBus.subscribe("listNameEntered", createList);
   eventBus.subscribe("listDeleted", deleteList);
   eventBus.subscribe("listModified", modifyList);
-  window.addEventListener('online', goOnline);
-  window.addEventListener('offline', goOffline);
-
-  function goOnline() {
-    syncData();
-  }
-
-  function goOffline() {
-    // no-op. All relevant actions check navigator.onLine before
-    // persisting data.
-  }
 
   function modifyList(list) {
     if (navigator.onLine && !list.getId().startsWith("LOCAL-")) {
@@ -160,22 +149,18 @@ define(['jquery', 'EventBus', 'List'], function($, eventBus, List) {
       error: function(jqXHR, textStatus, errorThrown) {
         alert("Error loading from the server. Loading data locally instead");
         loadAllLocally();
-      },
-      complete: function() {
-        $('.loadingIndicator').remove();
       }
     });
   }
 
-  function syncData() {
+  function syncData(callback) {
     var i,
         key,
         list,
-        successCallback = function(data, textStatus, jqXHR, list) {
+        successCallback = callback || function(data, textStatus, jqXHR, list) {
             localStorage.removeItem(list.getId());
         };
 
-    $('body').append($('<div>').addClass('loadingIndicator'));
     for (i = localStorage.length - 1; i >= 0; i--) {
       key = localStorage.key(i);
       list = new List(JSON.parse(localStorage.getItem(key)));
@@ -189,18 +174,83 @@ define(['jquery', 'EventBus', 'List'], function($, eventBus, List) {
         });
       }
     }
-    loadAllFromServer();
+  }
+
+  function getListFromServer(listId) {
+    $.ajax({
+      url: '/api/lists/' + listId,
+      success: function(data, textStatus, jqXHR) {
+        var list = new List(data);
+        eventBus.publish("listLoaded", list);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(listId);
+        alert("Error loading list from server. Loading from local storage instead");
+        getListLocally(listId);
+      }
+    });
+  }
+
+  function getListLocally(listId) {
+    var data = JSON.parse(localStorage.getItem(listId));
+
+    if (!data) {
+      eventBus.publish("listRetrievalFailed");
+      return;
+    }
+
+    eventBus.publish("listLoaded", new List(data));
   }
 
   return {
 
     init: function () {
+      window.addEventListener('online', syncData);
+
       if (navigator.onLine) {
         syncData();
+        loadAllFromServer();
       } else {
         loadAllLocally();
       }
-    }
+    },
 
+    loadList: function(listId) {
+      var newId;
+      if (!listId) {
+        eventBus.publish("listRetrievalFailed");
+        return;
+      }
+
+      window.addEventListener('online', function() {
+        syncData(syncCallback);
+        if (newId && newId !== listId) {
+          history.pushState(null, null, "/list/" + newId);
+          getListLocally(newId);
+        } else {
+          getListLocally(listId);
+        }
+      });
+
+      if (navigator.onLine) {
+        syncData(syncCallback);
+        if (newId && newId !== listId) {
+          history.pushState(null, null, "/list/" + newId);
+          getListLocally(newId);
+        } else {
+          getListLocally(listId);
+        }
+      } else {
+        getListLocally(listId);
+      }
+
+      function syncCallback(data, textStatus, jqXHR, list) {
+        newId = data.id;
+        localStorage.removeItem(list.getId());
+        localStorage.setItem(data.id, JSON.stringify((new
+                                List(data)).getPersistable()));
+
+      }
+    }
   };
 });

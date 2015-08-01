@@ -66,6 +66,13 @@ define(['jquery', 'EventBus', 'utils'], function($, eventBus, utils) {
       $editButton.hide();
     });
 
+    $container.on('click', function(event) {
+      if ($(event.target).is($deleteButton) || $(event.target).is($editButton)) {
+        return;
+      }
+      window.location = "/list/" + data.getId();
+    });
+
     return $container;
   }
 

@@ -44,6 +44,10 @@ define(['jquery'], function($) {
       entries = newEntries;
     };
 
+    this.addEntry = function(entry) {
+      entries.push(entry);
+    };
+
     this.isDirty = function() {
       return dirty;
     };

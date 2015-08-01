@@ -4,7 +4,7 @@
   <meta charset="UTF-8"></meta>
   <title>trellNo</title>
   <link rel="stylesheet" type="text/css" href="/style/app.css">
-  <script data-main="/scripts/main"
+  <script data-main="/scripts/listPageMain"
           src="/scripts/lib/require2.1.19.min.js"></script>
 </head>
 <body>
@@ -15,13 +15,9 @@
   </header>
 
   <main>
-    <div data-trellNoWidget="listCreatorContainer">
-      <div class="clickableWidget"
-           id="listCreator"
-           data-trellNoWidget="listCreator">Create a list</div>
-    </div>
-
-    <div data-trellNoWidget="listContainer"></div>
+    <h1 id="listName"></h1>
+    <button id="listEntryCreator">Add entry</button>
+    <ul id="listEntryContainer"></ul>
   </main>
 
 </body>

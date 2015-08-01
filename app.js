@@ -6,7 +6,7 @@ var express = require('express'),
     ListSchema,
     List;
 
-mongoose.connect('mongodb://localhost/V03');
+mongoose.connect('mongodb://localhost/V04');
 
 ListSchema = new mongoose.Schema({
   name: {type:String, required: true},
@@ -24,6 +24,10 @@ List = mongoose.model('List', ListSchema);
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
+app.get('/list/:listId', function(req, res, next) {
+  res.sendFile(__dirname + '/public/listPage.html');
+});
+
 app.get('/api/lists', function(req, res, next) {
   List.find({}, function(error, docs) {
     if (error) {
@@ -31,6 +35,22 @@ app.get('/api/lists', function(req, res, next) {
     }
 
     res.send(docs);
+  });
+});
+
+app.get('/api/lists/:listId', function(req, res, next) {
+  var listId = req.params.listId;
+  List.findById(listId, function(error, doc) {
+    if (error) {
+      return next(error);
+    }
+
+    if (doc) {
+      res.send(doc);
+    } else {
+      res.status(404);
+      res.end();
+    }
   });
 });
 
