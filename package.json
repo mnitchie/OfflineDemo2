@@ -1,0 +1,22 @@
+{
+  "name": "OfflineDemo2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mnitchie/OfflineDemo2.git"
+  },
+  "author": "mnitchie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mnitchie/OfflineDemo2/issues"
+  },
+  "homepage": "https://github.com/mnitchie/OfflineDemo2",
+  "dependencies": {
+    "express": "^4.13.2"
+  }
+}
