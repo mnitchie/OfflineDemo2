@@ -13,3 +13,6 @@ CACHE:
 /scripts/List.js
 /scripts/ListContainer.js
 /scripts/utils.js
+
+NETWORK:
+/api/lists

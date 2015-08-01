@@ -1,6 +1,6 @@
 define(['jquery', 'EventBus', 'utils'], function($, eventBus, utils) {
   'use strict';
-  
+
   var $listContainer;
 
   eventBus.subscribe("listSaved", addOne);
